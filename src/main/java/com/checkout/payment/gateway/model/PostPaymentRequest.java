@@ -8,12 +8,25 @@ public class PostPaymentRequest implements Serializable {
   @JsonProperty("card_number")
   private String cardNumber;
   @JsonProperty("expiry_month")
-  private int expiryMonth;
+  private Integer expiryMonth;
   @JsonProperty("expiry_year")
-  private int expiryYear;
+  private Integer expiryYear;
   private String currency;
-  private int amount;
+  private Integer amount;
   private String cvv;
+
+  public PostPaymentRequest(String cardNumber, Integer expiryMonth, Integer expiryYear,
+      String currency, Integer amount, String cvv) {
+    this.cardNumber = cardNumber;
+    this.expiryMonth = expiryMonth;
+    this.expiryYear = expiryYear;
+    this.currency = currency;
+    this.amount = amount;
+    this.cvv = cvv;
+  }
+
+  public PostPaymentRequest() {
+  }
 
   public String getCardNumber() {
     return cardNumber;
@@ -23,19 +36,19 @@ public class PostPaymentRequest implements Serializable {
     this.cardNumber = cardNumber;
   }
 
-  public int getExpiryMonth() {
+  public Integer getExpiryMonth() {
     return expiryMonth;
   }
 
-  public void setExpiryMonth(int expiryMonth) {
+  public void setExpiryMonth(Integer expiryMonth) {
     this.expiryMonth = expiryMonth;
   }
 
-  public int getExpiryYear() {
+  public Integer getExpiryYear() {
     return expiryYear;
   }
 
-  public void setExpiryYear(int expiryYear) {
+  public void setExpiryYear(Integer expiryYear) {
     this.expiryYear = expiryYear;
   }
 
@@ -47,11 +60,11 @@ public class PostPaymentRequest implements Serializable {
     this.currency = currency;
   }
 
-  public int getAmount() {
+  public Integer getAmount() {
     return amount;
   }
 
-  public void setAmount(int amount) {
+  public void setAmount(Integer amount) {
     this.amount = amount;
   }
 
