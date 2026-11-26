@@ -4,8 +4,8 @@ package com.checkout.payment.gateway.controller;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.checkout.payment.gateway.entity.Payment;
 import com.checkout.payment.gateway.enums.PaymentStatus;
-import com.checkout.payment.gateway.model.PostPaymentResponse;
 import com.checkout.payment.gateway.repository.PaymentsRepository;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -27,14 +27,14 @@ class PaymentGatewayControllerTest {
 
   @Test
   void whenPaymentWithIdExistThenCorrectPaymentIsReturned() throws Exception {
-    PostPaymentResponse payment = new PostPaymentResponse();
+    Payment payment = new Payment();
     payment.setId(UUID.randomUUID());
     payment.setAmount(10);
     payment.setCurrency("USD");
     payment.setStatus(PaymentStatus.AUTHORIZED);
     payment.setExpiryMonth(12);
     payment.setExpiryYear(2024);
-    payment.setCardNumberLastFour(4321);
+    payment.setCardNumberLastFour("4321");
 
     paymentsRepository.add(payment);
 
@@ -52,6 +52,8 @@ class PaymentGatewayControllerTest {
   void whenPaymentWithIdDoesNotExistThen404IsReturned() throws Exception {
     mvc.perform(MockMvcRequestBuilders.get("/payment/" + UUID.randomUUID()))
         .andExpect(status().isNotFound())
-        .andExpect(jsonPath("$.message").value("Page not found"));
+        .andExpect(jsonPath("$.message").value("Payment not found"))
+        .andExpect(jsonPath("$.errors").isEmpty())
+        .andExpect(jsonPath("$.status").doesNotExist());
   }
 }

@@ -19,4 +19,10 @@ public class CommonExceptionHandler {
     return new ResponseEntity<>(new ErrorResponse("Page not found"),
         HttpStatus.NOT_FOUND);
   }
+
+  @ExceptionHandler(PaymentNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handlePaymentNotFound(PaymentNotFoundException ex) {
+    LOG.info(ex.getMessage());
+    return new ResponseEntity<>(new ErrorResponse("Payment not found"), HttpStatus.NOT_FOUND);
+  }
 }

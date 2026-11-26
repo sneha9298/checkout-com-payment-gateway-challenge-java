@@ -1,16 +1,28 @@
 package com.checkout.payment.gateway.model;
 
+import com.checkout.payment.gateway.entity.Payment;
 import com.checkout.payment.gateway.enums.PaymentStatus;
 import java.util.UUID;
 
 public class GetPaymentResponse {
   private UUID id;
   private PaymentStatus status;
-  private int cardNumberLastFour;
+  private String cardNumberLastFour;
   private int expiryMonth;
   private int expiryYear;
   private String currency;
   private int amount;
+
+  public GetPaymentResponse(UUID id, PaymentStatus status, String cardNumberLastFour,
+      int expiryMonth, int expiryYear, String currency, int amount) {
+    this.id = id;
+    this.status = status;
+    this.cardNumberLastFour = cardNumberLastFour;
+    this.expiryMonth = expiryMonth;
+    this.expiryYear = expiryYear;
+    this.currency = currency;
+    this.amount = amount;
+  }
 
   public UUID getId() {
     return id;
@@ -28,11 +40,11 @@ public class GetPaymentResponse {
     this.status = status;
   }
 
-  public int getCardNumberLastFour() {
+  public String getCardNumberLastFour() {
     return cardNumberLastFour;
   }
 
-  public void setCardNumberLastFour(int cardNumberLastFour) {
+  public void setCardNumberLastFour(String cardNumberLastFour) {
     this.cardNumberLastFour = cardNumberLastFour;
   }
 
@@ -66,6 +78,15 @@ public class GetPaymentResponse {
 
   public void setAmount(int amount) {
     this.amount = amount;
+  }
+
+  public static GetPaymentResponse toPostPaymentResponse(Payment payment) {
+    return new GetPaymentResponse(
+        payment.getId(), payment.getStatus(),
+        payment.getCardNumberLastFour(), payment.getExpiryMonth(),
+        payment.getExpiryYear(), payment.getCurrency(),
+        payment.getAmount()
+    );
   }
 
   @Override
