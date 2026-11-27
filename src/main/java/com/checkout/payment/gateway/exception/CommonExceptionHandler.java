@@ -16,13 +16,26 @@ public class CommonExceptionHandler {
   @ExceptionHandler(EventProcessingException.class)
   public ResponseEntity<ErrorResponse> handleException(EventProcessingException ex) {
     LOG.error("Exception happened", ex);
-    return new ResponseEntity<>(new ErrorResponse("Page not found"),
+    return new ResponseEntity<>(ErrorResponse.of("Page not found"),
         HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler(PaymentNotFoundException.class)
   public ResponseEntity<ErrorResponse> handlePaymentNotFound(PaymentNotFoundException ex) {
     LOG.info(ex.getMessage());
-    return new ResponseEntity<>(new ErrorResponse("Payment not found"), HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(ErrorResponse.of("Payment not found"), HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(PaymentRejectedException.class)
+  public ResponseEntity<ErrorResponse> handleRejected(PaymentRejectedException ex) {
+    return new ResponseEntity<>(ErrorResponse.rejected(ex.getErrors()), HttpStatus.BAD_REQUEST);
+  }
+
+  // HttpBankClient has already logged the details.
+  @ExceptionHandler(BankUnavailableException.class)
+  public ResponseEntity<ErrorResponse> handleBankUnavailable(BankUnavailableException ex) {
+    return new ResponseEntity<>(
+        ErrorResponse.of("The acquiring bank is unavailable. Please try again later."),
+        HttpStatus.BAD_GATEWAY);
   }
 }

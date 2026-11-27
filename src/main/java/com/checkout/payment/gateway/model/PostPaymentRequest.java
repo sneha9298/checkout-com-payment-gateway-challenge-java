@@ -5,11 +5,8 @@ import java.io.Serializable;
 
 public class PostPaymentRequest implements Serializable {
 
-  @JsonProperty("card_number")
   private String cardNumber;
-  @JsonProperty("expiry_month")
   private Integer expiryMonth;
-  @JsonProperty("expiry_year")
   private Integer expiryYear;
   private String currency;
   private Integer amount;

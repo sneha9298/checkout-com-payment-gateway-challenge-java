@@ -22,12 +22,12 @@ public class PaymentGatewayController {
     this.paymentGatewayService = paymentGatewayService;
   }
 
-  @GetMapping("/payment/{id}")
+  @GetMapping("/payments/{id}")
   public ResponseEntity<GetPaymentResponse> getPostPaymentEventById(@PathVariable UUID id) {
     return new ResponseEntity<>(paymentGatewayService.getPaymentById(id), HttpStatus.OK);
   }
 
-  @PostMapping
+  @PostMapping("/payments")
   public ResponseEntity<PostPaymentResponse> processPayment(
       @RequestBody PostPaymentRequest request) {
     return ResponseEntity.status(HttpStatus.CREATED)

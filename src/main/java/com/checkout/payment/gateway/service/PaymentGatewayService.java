@@ -42,7 +42,7 @@ public class PaymentGatewayService {
   }
 
   public GetPaymentResponse getPaymentById(UUID id) {
-    LOG.debug("Requesting access to to payment with ID {}", id);
+    LOG.debug("Requesting access to payment with ID {}", id);
     return paymentsRepository.get(id)
         .map(GetPaymentResponse::toPostPaymentResponse)
         .orElseThrow(() -> new PaymentNotFoundException(id));
